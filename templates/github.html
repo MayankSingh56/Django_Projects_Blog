@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub | Mayank's DevOps Blogs</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+  <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header class="blog-header py-3">
+      <a class="blog-header-logo text-dark" href="{% url 'home' %}">
+        Mayank's DevOps Blogs
+      </a>
+    </header>
+
+    <main class="py-5">
+      <section class="p-4 bg-light rounded">
+        <h1 class="font-italic">GitHub</h1>
+        <p class="lead mb-4">
+          Find project code, Django experiments, and DevOps practice work here.
+        </p>
+        <a class="btn btn-dark" href="https://github.com/" target="_blank" rel="noopener">
+          Open GitHub
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <footer class="blog-footer">
+    <p><a href="{% url 'home' %}">Back to blog</a></p>
+  </footer>
+</body>
+</html>

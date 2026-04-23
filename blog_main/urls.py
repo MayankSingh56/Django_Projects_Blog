@@ -23,4 +23,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('category/<int:category_id>/', views.category_posts, name='category_posts'),
+    path('github/', views.github, name='github'),
+    path('linkedin/', views.linkedin, name='linkedin'),
+    path('register/', views.register, name='register'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
