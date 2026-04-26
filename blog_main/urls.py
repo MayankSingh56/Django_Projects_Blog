@@ -27,4 +27,7 @@ urlpatterns = [
     path('github/', views.github, name='github'),
     path('linkedin/', views.linkedin, name='linkedin'),
     path('register/', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('blogs/create/', views.create_blog, name='create_blog'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

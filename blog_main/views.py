@@ -1,8 +1,10 @@
 
 from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
-from blogs.forms import RegisterForm
+from blogs.forms import BlogForm, LoginForm, RegisterForm
 from blogs.models import Blog, Category
 
 
@@ -79,10 +81,51 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Registration successful. You can log in now.')
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful. You are now logged in.')
             return redirect('home')
     else:
         form = RegisterForm()
 
     return render(request, 'register.html', {'form': form})
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            messages.success(request, 'Welcome back. You are logged in now.')
+            return redirect('home')
+    else:
+        form = LoginForm(request)
+
+    return render(request, 'login.html', {'form': form})
+
+
+@login_required
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'You have been logged out.')
+    return redirect('home')
+
+
+@login_required
+def create_blog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            messages.success(request, 'Your blog has been created successfully.')
+            return redirect('home')
+    else:
+        form = BlogForm()
+
+    return render(request, 'create_blog.html', {'form': form})

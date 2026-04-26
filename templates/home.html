@@ -26,8 +26,16 @@
         </div>
 
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-sm btn-warning mr-2" href="#">Login</a>
-          <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Register</a>
+          {% if user.is_authenticated %}
+            <a class="btn btn-sm btn-warning mr-2" href="{% url 'create_blog' %}">Create Blog</a>
+            <form method="post" action="{% url 'logout' %}" class="mb-0">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-outline-secondary" type="submit">Logout</button>
+            </form>
+          {% else %}
+            <a class="btn btn-sm btn-warning mr-2" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Register</a>
+          {% endif %}
         </div>
       </div>
     </header>
@@ -134,6 +142,14 @@
           <h2 class="pb-3 mb-4 font-italic border-bottom">
             {{ page_title|default:"Latest Articles" }}
           </h2>
+
+          {% if user.is_authenticated %}
+            <div class="mb-4">
+              <a class="btn btn-outline-warning" href="{% url 'create_blog' %}">
+                Write a new post
+              </a>
+            </div>
+          {% endif %}
 
           {% for blog in blogs %}
             <article class="blog-post">
